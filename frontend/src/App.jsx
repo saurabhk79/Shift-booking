@@ -2,10 +2,9 @@ import { useMyContext } from "./context";
 import styles from "./app.module.css";
 
 const App = () => {
-  const { count } = useMyContext();
+  const { shifts, bookedShifts } = useMyContext();
 
-  console.log(count);
-
+    // console.log(bookedShifts);
   return (
     <div className={styles.app}>
       <div className={styles.shiftTabs}>
