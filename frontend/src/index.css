@@ -1,0 +1,33 @@
+:root {
+  --color-whitest: white;
+  --color-whiter: #f7f8fb;
+  --color-bg: #f1f4f8;
+  --color-dullWhiteBlue: #cbd2e1;
+  --color-dullBlue: #a4b8d3;
+  --color-indigo: #4F6C92;
+  --color-blue: #004FB4;
+
+  --color-whiteRed:#EED2DF;
+  --color-pink:#FE93B3;
+  --color-red:#E2006A;
+
+  --color-whiteGreen:#CAEFD8;
+  --color-green:#55CB82;
+  --color-darkGreen:#16A64D;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: var(--color-bg);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
