@@ -8,7 +8,7 @@ export const MyProvider = ({ children }) => {
   const [shifts, setShifts] = useState([]);
   const [groupedShifts, setGroupedShifts] = useState({});
   const [bookedShifts, setBookedShifts] = useState({});
-  
+
   const [shiftTabs, setShiftTabs] = useState(false);
 
   useEffect(() => {
@@ -25,28 +25,12 @@ export const MyProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const filterBookedShifts = (groupedShifts) => {
-      const bookedShifts = {};
-  
-      Object.keys(groupedShifts).forEach((groupName) => {
-        bookedShifts[groupName] = groupedShifts[groupName].filter(
-          (shift) => shift.booked
-        );
-      });
-  
-      setBookedShifts(bookedShifts);
-    };
-
-    filterBookedShifts();
-  }, [shifts]);
-
-  useEffect(() => {
     const groupShifts = () => {
       const today = new Date().setHours(0, 0, 0, 0);
       const tomorrow = new Date(today);
       tomorrow.setDate(tomorrow.getDate() + 1);
 
-      const groupedShifts = {};
+      const newGroupedShifts = {};
 
       shifts.forEach((shift) => {
         const { startTime } = shift;
@@ -55,21 +39,38 @@ export const MyProvider = ({ children }) => {
         const date = new Date(shiftDate);
 
         if (shiftDate === today) {
-          groupedShifts["Today"] = groupedShifts["Today"] || [];
-          groupedShifts["Today"].push({ ...shift, date });
+          newGroupedShifts["Today"] = newGroupedShifts["Today"] || [];
+          newGroupedShifts["Today"].push({ ...shift, date });
         } else if (shiftDate === tomorrow) {
-          groupedShifts["Tomorrow"] = groupedShifts["Tomorrow"] || [];
-          groupedShifts["Tomorrow"].push({ ...shift, date });
+          newGroupedShifts["Tomorrow"] = newGroupedShifts["Tomorrow"] || [];
+          newGroupedShifts["Tomorrow"].push({ ...shift, date });
         } else {
-          groupedShifts[date] = groupedShifts[date] || [];
-          groupedShifts[date].push({ ...shift, date });
+          newGroupedShifts[date] = newGroupedShifts[date] || [];
+          newGroupedShifts[date].push({ ...shift, date });
         }
       });
 
-      setGroupedShifts(groupedShifts);
+      setGroupedShifts(newGroupedShifts);
     };
     groupShifts();
   }, [shifts]);
+
+  useEffect(() => {
+    const filterBookedShifts = (groupedShifts) => {
+      const bookedShifts = {};
+      if (!groupedShifts) return; 
+
+      Object.keys(groupedShifts).forEach((groupName) => {
+        bookedShifts[groupName] = groupedShifts[groupName].filter(
+          (shift) => shift.booked
+        );
+      });
+
+      setBookedShifts(bookedShifts);
+    };
+
+    filterBookedShifts(groupedShifts);
+  }, [groupedShifts]);
 
   const handleShiftTabs = (val) => {
     setShiftTabs(val);
