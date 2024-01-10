@@ -1,9 +1,19 @@
-import React from 'react'
+import { useMyContext } from "./context";
+import styles from "./app.module.css";
 
 const App = () => {
-  return (
-    <div>App</div>
-  )
-}
+  const { count } = useMyContext();
 
-export default App
+  console.log(count);
+
+  return (
+    <div className={styles.app}>
+      <div className={styles.shiftTabs}>
+        <span>My shifts</span>
+        <span>Available shifts</span>
+      </div>
+    </div>
+  );
+};
+
+export default App;
