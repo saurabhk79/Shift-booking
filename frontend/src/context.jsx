@@ -8,9 +8,10 @@ export const MyProvider = ({ children }) => {
   const [shifts, setShifts] = useState([]);
   const [groupedShifts, setGroupedShifts] = useState({});
   const [bookedShifts, setBookedShifts] = useState({});
-  const [cities, setCities] = useState([])
+  const [cities, setCities] = useState([]);
 
   const [shiftTabs, setShiftTabs] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(true);
 
   useEffect(() => {
     const fetchShifts = async () => {
@@ -35,7 +36,7 @@ export const MyProvider = ({ children }) => {
 
       const citiesArray = Array.from(uniqueCities);
 
-      setCities(citiesArray)
+      setCities(citiesArray);
     };
     getAllCities(shifts);
   }, [shifts]);
@@ -96,6 +97,30 @@ export const MyProvider = ({ children }) => {
     setShiftTabs(val);
   };
 
+  const bookShift = async (id) => {
+    const URL = `http://localhost:8080/shifts/${id}/book`;
+
+    console.log(id)
+    try {
+      const res = await fetch(URL, {
+        method: "POST",
+      });
+      const data = await res.json();
+      console.log(data);
+
+      // setIsUpdated(!isUpdated);
+    } catch (error) {
+      console.error("Error while booking the shift", error);
+    }
+  };
+
+  const cancelShift = async (id) => {
+    const URL = `http://localhost:8080/shifts/${id}/cancel`;
+    await fetch(URL);
+
+    setIsUpdated(!isUpdated);
+  };
+
   const valueList = {
     shifts,
     cities,
@@ -103,6 +128,8 @@ export const MyProvider = ({ children }) => {
     shiftTabs,
     groupedShifts,
     handleShiftTabs,
+    bookShift,
+    cancelShift,
   };
   return <MyContext.Provider value={valueList}>{children}</MyContext.Provider>;
 };

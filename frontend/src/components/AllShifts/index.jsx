@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMyContext } from "../../context";
 import ShiftCard from "../ShiftCard";
 
 const AllShifts = () => {
   const { groupedShifts, cities } = useMyContext();
 
-  const [filteredShifts, setFilteredShifts] = useState(groupedShifts)
+  const [filteredShifts, setFilteredShifts] = useState({});
 
   const getUpdatedShifts = (selectedCity) => {
     const newShifts = {};
 
     Object.keys(groupedShifts).forEach((date) => {
-      const shiftsForCity = groupedShifts[date].filter((shift) => shift.area === selectedCity);
+      const shiftsForCity = groupedShifts[date].filter(
+        (shift) => shift.area === selectedCity
+      );
 
       if (shiftsForCity.length > 0) {
         newShifts[date] = shiftsForCity;
@@ -21,17 +23,21 @@ const AllShifts = () => {
     setFilteredShifts(newShifts);
   };
 
-  console.log(filteredShifts)
+ useEffect(()=>{
+  getUpdatedShifts(cities[0])
+ // eslint-disable-next-line react-hooks/exhaustive-deps
+ },[])
 
   return (
     <div>
       <div>
         {cities.map((city, idx) => (
-          <span key={idx} onClick={()=>getUpdatedShifts(city)}>{city}</span>
+          <span key={idx} onClick={() => getUpdatedShifts(city)}>
+            {city}
+          </span>
         ))}
       </div>
 
-      {/* eslint-disable-next-line no-unused-vars */}
       {Object.entries(filteredShifts).map(([key, shifts], idx) => {
         const formattedDate = new Date(key).toLocaleDateString("en-US", {
           month: "long",
@@ -42,10 +48,11 @@ const AllShifts = () => {
           <div key={idx}>
             <h3>{key === "Today" ? "Today" : formattedDate}</h3>
             {shifts.map((shift) => {
-              const { area, booked, endTime, startTime } = shift;
+              const { id, area, booked, endTime, startTime } = shift;
               return (
                 <ShiftCard
-                  key={shift.id}
+                  key={id}
+                  id={id}
                   area={area}
                   booked={booked}
                   endTime={endTime}
