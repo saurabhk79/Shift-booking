@@ -1,11 +1,10 @@
 import { useMyContext } from "./context";
 import styles from "./app.module.css";
-import ShiftCard from "./components/ShiftCard";
 // import MyShifts from "./components/MyShifts";
 import AllShifts from "./components/AllShifts";
 
 const App = () => {
-  const {  groupedShifts } = useMyContext();
+  const {  groupedShifts  } = useMyContext();
 
   console.log(groupedShifts);
   return (

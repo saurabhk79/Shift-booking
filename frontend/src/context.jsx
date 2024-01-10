@@ -8,6 +8,7 @@ export const MyProvider = ({ children }) => {
   const [shifts, setShifts] = useState([]);
   const [groupedShifts, setGroupedShifts] = useState({});
   const [bookedShifts, setBookedShifts] = useState({});
+  const [cities, setCities] = useState([])
 
   const [shiftTabs, setShiftTabs] = useState(false);
 
@@ -23,6 +24,21 @@ export const MyProvider = ({ children }) => {
 
     fetchShifts();
   }, []);
+
+  useEffect(() => {
+    const getAllCities = (shifts) => {
+      const uniqueCities = new Set();
+
+      shifts.forEach((shift) => {
+        uniqueCities.add(shift.area);
+      });
+
+      const citiesArray = Array.from(uniqueCities);
+
+      setCities(citiesArray)
+    };
+    getAllCities(shifts);
+  }, [shifts]);
 
   useEffect(() => {
     const groupShifts = () => {
@@ -50,6 +66,10 @@ export const MyProvider = ({ children }) => {
         }
       });
 
+      Object.keys(newGroupedShifts).forEach((groupName) => {
+        newGroupedShifts[groupName].sort((a, b) => a.startTime - b.startTime);
+      });
+
       setGroupedShifts(newGroupedShifts);
     };
     groupShifts();
@@ -58,12 +78,12 @@ export const MyProvider = ({ children }) => {
   useEffect(() => {
     const filterBookedShifts = (groupedShifts) => {
       const bookedShifts = {};
-      if (!groupedShifts) return; 
+      if (!groupedShifts) return;
 
       Object.keys(groupedShifts).forEach((groupName) => {
-        bookedShifts[groupName] = groupedShifts[groupName].filter(
-          (shift) => shift.booked
-        );
+        bookedShifts[groupName] = groupedShifts[groupName]
+          .filter((shift) => shift.booked)
+          .sort((a, b) => a.startTime - b.startTime);
       });
 
       setBookedShifts(bookedShifts);
@@ -78,6 +98,7 @@ export const MyProvider = ({ children }) => {
 
   const valueList = {
     shifts,
+    cities,
     bookedShifts,
     shiftTabs,
     groupedShifts,

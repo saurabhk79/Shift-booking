@@ -2,8 +2,8 @@
 import styles from "./shiftCard.module.css";
 
 // eslint-disable-next-line react/prop-types
-const ShiftCard = ({area, booked, endTime, startTime}) => {
-  const currentTime = new Date()
+const ShiftCard = ({ area, booked, endTime, startTime }) => {
+  const currentTime = new Date();
 
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);
@@ -21,7 +21,11 @@ const ShiftCard = ({area, booked, endTime, startTime}) => {
       </div>
 
       <div>
-        <button disabled={currentTime > startTime}>Cancel</button>
+        {booked ? (
+          <button disabled={currentTime > startTime}>Cancel</button>
+        ) : (
+          <button>Book</button>
+        )}
       </div>
     </div>
   );
