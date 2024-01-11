@@ -5,7 +5,6 @@
 }
 
 .shiftTabs {
-    color: var(  --color-dullBlue);
     font-size: xx-large;
     margin-top: 60px;
     margin-bottom: 16px;
@@ -14,4 +13,10 @@
 .shiftTabs > span {
     margin: 0 8px;
     cursor: pointer;
+}
+
+.shiftsBox {
+    border: 1px solid var(  --color-dullWhiteBlue);
+    border-radius: 4px;
+    background: var(  --color-whitest);
 }

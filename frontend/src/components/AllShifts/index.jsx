@@ -8,6 +8,7 @@ const AllShifts = () => {
   const { groupedShifts, cities } = useMyContext();
 
   const [filteredShifts, setFilteredShifts] = useState({});
+  const [currentCityHighLighter, setCurrentCityHighLighter] = useState("")
 
   const getUpdatedShifts = (selectedCity) => {
     const newShifts = {};
@@ -21,7 +22,7 @@ const AllShifts = () => {
         newShifts[date] = shiftsForCity;
       }
     });
-
+    setCurrentCityHighLighter(selectedCity)
     setFilteredShifts(newShifts);
   };
 
@@ -31,10 +32,10 @@ const AllShifts = () => {
  },[])
 
   return (
-    <div className={styles.allShiftsBox}>
+    <div>
       <div className={styles.citiesList}>
         {cities.map((city, idx) => (
-          <h3 key={idx} onClick={() => getUpdatedShifts(city)}>
+          <h3 key={idx} onClick={() => getUpdatedShifts(city)} style={{color:currentCityHighLighter === city ? "var(--color-blue)" : "var(--color-dullBlue)"}}>
             {city}
           </h3>
         ))}

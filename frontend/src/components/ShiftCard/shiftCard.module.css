@@ -16,9 +16,14 @@
 .bookBtn {
     color: var(  --color-darkGreen);
     background-color: transparent;
-    /* font-size: large; */
     border: 1px solid var(--color-darkGreen);
     padding: 8px 32px;
     border-radius: 24px;
     cursor: pointer;
+}
+
+.bookBtn:disabled {
+    color: var(  --color-whiteGreen);
+    border: 1px solid var(--color-whiteGreen);
+    cursor: not-allowed;
 }

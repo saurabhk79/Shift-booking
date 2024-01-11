@@ -38,7 +38,7 @@ const ShiftCard = ({
             Cancel
           </button>
         ) : (
-          <button onClick={() => bookShift(id)} className={styles.bookBtn}>Book</button>
+          <button onClick={() => bookShift(id)} className={styles.bookBtn} disabled={currentTime > startTime}>Book</button>
         )}
       </div>
     </div>

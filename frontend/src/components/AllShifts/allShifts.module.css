@@ -1,8 +1,4 @@
-.allShiftsBox {
-    border: 1px solid var(  --color-dullWhiteBlue);
-    border-radius: 4px;
-    background: var(  --color-whitest);
-}
+
 
 .citiesList {
     display: flex;

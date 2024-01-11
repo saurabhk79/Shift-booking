@@ -98,17 +98,26 @@ export const MyProvider = ({ children }) => {
   };
 
   const bookShift = async (id) => {
-    const URL = `http://localhost:8080/shifts/${id}/book`;
+    // const URL = `http://localhost:8080/shifts/${id}/book`;
 
     console.log(id)
     try {
-      const res = await fetch(URL, {
-        method: "POST",
-      });
-      const data = await res.json();
-      console.log(data);
+      // backend not accepting post request
+      // const res = await fetch(URL, {
+      //   method: "POST",
+      // });
+      // const data = await res.json();
+      // console.log(data);
 
-      // setIsUpdated(!isUpdated);
+      const newShifts = [...shifts]
+      let shift = newShifts.filter((ele)=> ele.id === id)
+      shift[0].booked = true
+
+      console.log(shift)
+      setShiftTabs([...newShifts, {...shift}])
+
+      setIsUpdated(!isUpdated)
+      return true
     } catch (error) {
       console.error("Error while booking the shift", error);
     }
