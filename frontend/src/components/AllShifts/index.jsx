@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useMyContext } from "../../context";
 import ShiftCard from "../ShiftCard";
 
+import styles from "./allShifts.module.css"
+
 const AllShifts = () => {
   const { groupedShifts, cities } = useMyContext();
 
@@ -29,12 +31,12 @@ const AllShifts = () => {
  },[])
 
   return (
-    <div>
-      <div>
+    <div className={styles.allShiftsBox}>
+      <div className={styles.citiesList}>
         {cities.map((city, idx) => (
-          <span key={idx} onClick={() => getUpdatedShifts(city)}>
+          <h3 key={idx} onClick={() => getUpdatedShifts(city)}>
             {city}
-          </span>
+          </h3>
         ))}
       </div>
 
@@ -46,7 +48,7 @@ const AllShifts = () => {
 
         return (
           <div key={idx}>
-            <h3>{key === "Today" ? "Today" : formattedDate}</h3>
+            <h3 className={styles.header}>{key === "Today" ? "Today" : formattedDate}</h3>
             {shifts.map((shift) => {
               const { id, area, booked, endTime, startTime } = shift;
               return (

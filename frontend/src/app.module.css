@@ -1,4 +1,17 @@
 .app {
     max-width: 720px;
     margin: auto;
+    margin-bottom: 100px;
+}
+
+.shiftTabs {
+    color: var(  --color-dullBlue);
+    font-size: xx-large;
+    margin-top: 60px;
+    margin-bottom: 16px;
+}
+
+.shiftTabs > span {
+    margin: 0 8px;
+    cursor: pointer;
 }

@@ -1,10 +1,17 @@
+/* eslint-disable react/prop-types */
 // import React from "react";
 import { useMyContext } from "../../context";
 import styles from "./shiftCard.module.css";
 
-// eslint-disable-next-line react/prop-types
-const ShiftCard = ({ id,area, booked, endTime, startTime }) => {
-  const {bookShift, cancelShift} = useMyContext()
+const ShiftCard = ({
+  id,
+  area,
+  booked,
+  endTime,
+  startTime,
+  showForMyShifts = false,
+}) => {
+  const { bookShift, cancelShift } = useMyContext();
   const currentTime = new Date();
 
   const formatTime = (timestamp) => {
@@ -16,17 +23,22 @@ const ShiftCard = ({ id,area, booked, endTime, startTime }) => {
   return (
     <div className={styles.shiftCard}>
       <div>
-        <h3>
+        <div className={styles.timing}>
           {formatTime(startTime)}-{formatTime(endTime)}
-        </h3>
-        <p>{area}</p>
+        </div>
+        {showForMyShifts ? <p>{area}</p> : ""}
       </div>
 
       <div>
         {booked ? (
-          <button onClick={()=> cancelShift(id)} disabled={currentTime > startTime}>Cancel</button>
+          <button
+            onClick={() => cancelShift(id)}
+            disabled={currentTime > startTime}
+          >
+            Cancel
+          </button>
         ) : (
-          <button onClick={()=> bookShift(id)}>Book</button>
+          <button onClick={() => bookShift(id)} className={styles.bookBtn}>Book</button>
         )}
       </div>
     </div>

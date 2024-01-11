@@ -1,0 +1,25 @@
+.allShiftsBox {
+    border: 1px solid var(  --color-dullWhiteBlue);
+    border-radius: 4px;
+    background: var(  --color-whitest);
+}
+
+.citiesList {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    padding: 16px 0;
+    color: var(--color-dullBlue);
+    border-bottom: 1px solid var(--color-dullWhiteBlue);
+}
+
+.citiesList > h3 {
+    cursor: pointer;
+}
+
+.header {
+    color: var(--color-indigo);
+    background-color: var(  --color-bg);
+    padding: 16px;
+}

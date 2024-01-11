@@ -1,8 +1,24 @@
 .shiftCard {
-    border: 1px solid #000;
+    border-bottom: 1px solid  var(--color-dullWhiteBlue);
+    border-top: 1px solid  var(--color-dullWhiteBlue);
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px;
+    padding: 16px;
+}
+
+.timing {
+    font-size: larger;
+    color: var(  --color-dullBlue);
+}
+
+.bookBtn {
+    color: var(  --color-darkGreen);
+    background-color: transparent;
+    /* font-size: large; */
+    border: 1px solid var(--color-darkGreen);
+    padding: 8px 32px;
+    border-radius: 24px;
+    cursor: pointer;
 }
