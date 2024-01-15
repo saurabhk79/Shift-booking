@@ -14,11 +14,12 @@ export const MyProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchShifts = async () => {
-      const URL = "https://shift-booking-backend.onrender.com/shifts";
+      // const URL = "https://shift-booking-backend.onrender.com/shifts";
+      const URL = "http://localhost:8080/shifts";
 
       const res = await fetch(URL);
       const data = await res.json();
-      // console.log(data)
+
       setShifts(data);
     };
 
@@ -41,7 +42,6 @@ export const MyProvider = ({ children }) => {
   }, [shifts]);
 
   useEffect(() => {
-    console.log("Shifts updated");
     const groupShifts = () => {
       const today = new Date().setHours(0, 0, 0, 0);
       const tomorrow = new Date(today);
@@ -77,7 +77,6 @@ export const MyProvider = ({ children }) => {
   }, [shifts]);
 
   useEffect(() => {
-    console.log("Grouped Shifts updated");
     const filterBookedShifts = (groupedShifts) => {
       const newBookedShifts = {};
       if (!groupedShifts) return;
@@ -88,7 +87,6 @@ export const MyProvider = ({ children }) => {
           .sort((a, b) => a.startTime - b.startTime);
       });
 
-      console.log(newBookedShifts);
       setBookedShifts(newBookedShifts);
     };
 
@@ -107,7 +105,6 @@ export const MyProvider = ({ children }) => {
     //   method: "POST",
     // });
     // const data = await res.json();
-    // console.log(data);
 
     const newShifts = [...shifts];
     let shift = newShifts.filter((ele) => ele.id === id);
@@ -119,13 +116,8 @@ export const MyProvider = ({ children }) => {
   };
 
   const cancelShift = async (id) => {
-<<<<<<< HEAD
     const newShifts = [...shifts];
     let shift = newShifts.filter((ele) => ele.id === id);
-=======
-    const URL = `https://shift-booking-backend.onrender.com/shifts/${id}/cancel`;
-    await fetch(URL);
->>>>>>> d269f376e301e0c63f45092471db2629f2b13484
 
     if (shift.booked){
       shift[0].booked = false;

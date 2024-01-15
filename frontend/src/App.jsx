@@ -6,7 +6,6 @@ import AllShifts from "./components/AllShifts";
 const App = () => {
   const { shiftTabs, handleShiftTabs } = useMyContext();
 
-  // console.log(groupedShifts);
   return (
     <div className={styles.app}>
       <div className={styles.shiftTabs}>
