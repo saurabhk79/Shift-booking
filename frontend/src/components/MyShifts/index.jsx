@@ -4,7 +4,6 @@ import styles from "./myShifts.module.css";
 
 const MyShifts = () => {
   const { bookedShifts } = useMyContext();
-  console.log(Object.entries(bookedShifts));
   return (
     <div>
       {Object.entries(bookedShifts).map(([key, shifts], idx) => {
