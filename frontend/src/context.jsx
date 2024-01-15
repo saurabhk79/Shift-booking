@@ -13,6 +13,11 @@ export const MyProvider = ({ children }) => {
   const [shiftTabs, setShiftTabs] = useState(false);
 
   useEffect(() => {
+    /**
+     * Fetches shifts from the server and updates the state.
+     * @async
+     * @returns {Promise<void>}
+     */
     const fetchShifts = async () => {
       // const URL = "https://shift-booking-backend.onrender.com/shifts";
       const URL = "http://localhost:8080/shifts";
@@ -27,6 +32,10 @@ export const MyProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    /**
+     * Extracts unique cities from the shifts and updates the state.
+     * @param {Array} shifts - List of shifts.
+     */
     const getAllCities = (shifts) => {
       const uniqueCities = new Set();
 
@@ -42,6 +51,11 @@ export const MyProvider = ({ children }) => {
   }, [shifts]);
 
   useEffect(() => {
+    /**
+     * Groups shifts by date and updates the state.
+     * @function
+     * @name groupShifts
+     */
     const groupShifts = () => {
       const today = new Date().setHours(0, 0, 0, 0);
       const tomorrow = new Date(today);
@@ -77,6 +91,10 @@ export const MyProvider = ({ children }) => {
   }, [shifts]);
 
   useEffect(() => {
+    /**
+     * Filters and groups booked shifts and updates the state.
+     * @param {Object} groupedShifts - Shifts grouped by date.
+     */
     const filterBookedShifts = (groupedShifts) => {
       const newBookedShifts = {};
       if (!groupedShifts) return;
@@ -93,10 +111,20 @@ export const MyProvider = ({ children }) => {
     filterBookedShifts(groupedShifts);
   }, [groupedShifts]);
 
+  /**
+   * Handles the state of the shiftTabs.
+   * @param {boolean} val - New value for shiftTabs.
+   */
   const handleShiftTabs = (val) => {
     setShiftTabs(val);
   };
 
+  /**
+   * Books a shift by updating its 'booked' status in the state.
+   * @async
+   * @param {string} id - ID of the shift to be booked.
+   * @returns {Promise<void>}
+   */
   const bookShift = async (id) => {
     // const URL = `http://localhost:8080/shifts/${id}/book`;
 
@@ -107,20 +135,26 @@ export const MyProvider = ({ children }) => {
     // const data = await res.json();
 
     const newShifts = [...shifts];
-    let shift = newShifts.filter((ele) => ele.id === id);
+    let shift = newShifts.find((ele) => ele.id === id);
 
     if (!shift.booked) {
-      shift[0].booked = true;
+      shift.booked = true;
       setShifts(newShifts);
     }
   };
 
+  /**
+   * Cancels a booked shift by updating its 'booked' status in the state.
+   * @async
+   * @param {string} id - ID of the shift to be canceled.
+   * @returns {Promise<void>}
+   */
   const cancelShift = async (id) => {
     const newShifts = [...shifts];
-    let shift = newShifts.filter((ele) => ele.id === id);
+    let shift = newShifts.find((ele) => ele.id === id);
 
-    if (shift.booked){
-      shift[0].booked = false;
+    if (shift.booked) {
+      shift.booked = false;
       setShifts(newShifts);
     }
   };

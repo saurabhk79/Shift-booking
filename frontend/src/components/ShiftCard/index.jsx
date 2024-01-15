@@ -3,6 +3,9 @@ import { useState } from "react";
 import { useMyContext } from "../../context";
 import styles from "./shiftCard.module.css";
 
+import GreenSpinner from "../../assets/spinner_green.svg";
+import RedSpinner from "../../assets/spinner_red.svg";
+
 const ShiftCard = ({
   id,
   area,
@@ -12,8 +15,25 @@ const ShiftCard = ({
   showForMyShifts = false,
 }) => {
   const [isUpdated, setIsUpdated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { bookShift, cancelShift } = useMyContext();
   const currentTime = new Date();
+
+  const handleBookShift = () => {
+    setIsLoading(true);
+    bookShift(id);
+    setIsUpdated(!isUpdated);
+
+    setIsLoading(false);
+  };
+
+  const handleCancelShift = async () => {
+    setIsLoading(true);
+    await cancelShift(id);
+    setIsUpdated(!isUpdated);
+
+    setIsLoading(false);
+  };
 
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);
@@ -33,25 +53,19 @@ const ShiftCard = ({
       <div>
         {booked ? (
           <button
-            onClick={() => {
-              cancelShift(id);
-              setIsUpdated(!isUpdated);
-            }}
+            onClick={handleCancelShift}
             className={styles.cancelBtn}
             disabled={currentTime > startTime}
           >
-            Cancel
+            {isLoading ? <img src={RedSpinner} alt="Loading" /> : "Cancel"}
           </button>
         ) : (
           <button
-            onClick={() => {
-              bookShift(id);
-              setIsUpdated(!isUpdated);
-            }}
+            onClick={handleBookShift}
             className={styles.bookBtn}
             disabled={currentTime > startTime}
           >
-            Book
+            {isLoading ? <img src={GreenSpinner} alt="Loading" /> : "Book"}
           </button>
         )}
       </div>
