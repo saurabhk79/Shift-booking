@@ -14,7 +14,7 @@ export const MyProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchShifts = async () => {
-      const URL = "http://localhost:8080/shifts";
+      const URL = "https://shift-booking-backend.onrender.com/shifts";
 
       const res = await fetch(URL);
       const data = await res.json();
@@ -119,8 +119,13 @@ export const MyProvider = ({ children }) => {
   };
 
   const cancelShift = async (id) => {
+<<<<<<< HEAD
     const newShifts = [...shifts];
     let shift = newShifts.filter((ele) => ele.id === id);
+=======
+    const URL = `https://shift-booking-backend.onrender.com/shifts/${id}/cancel`;
+    await fetch(URL);
+>>>>>>> d269f376e301e0c63f45092471db2629f2b13484
 
     if (shift.booked){
       shift[0].booked = false;

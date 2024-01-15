@@ -1,10 +1,10 @@
-import { useMyContext } from "../../context"
-import ShiftCard from "../ShiftCard"
-import styles from "./myShifts.module.css"
+import { useMyContext } from "../../context";
+import ShiftCard from "../ShiftCard";
+import styles from "./myShifts.module.css";
 
 const MyShifts = () => {
-    const {bookedShifts} = useMyContext()
-    console.log(Object.entries(bookedShifts))
+  const { bookedShifts } = useMyContext();
+  console.log(Object.entries(bookedShifts));
   return (
     <div>
       {Object.entries(bookedShifts).map(([key, shifts], idx) => {
@@ -15,7 +15,14 @@ const MyShifts = () => {
 
         return (
           <div key={idx}>
-            {shifts.length === 0 ? <></> : <h3 className={styles.header}>{key === "Today" ? "Today" : formattedDate}</h3>}
+            {shifts.length === 0 ? (
+              <></>
+            ) : (
+              <div className={styles.header}>
+                <h3>{key === "Today" ? "Today" : formattedDate}</h3>
+                <b>{shifts.length} shifts</b>
+              </div>
+            )}
             {shifts.map((shift) => {
               const { id, area, booked, endTime, startTime } = shift;
               return (
@@ -26,6 +33,7 @@ const MyShifts = () => {
                   booked={booked}
                   endTime={endTime}
                   startTime={startTime}
+                  showForMyShifts={true}
                 />
               );
             })}
@@ -33,7 +41,7 @@ const MyShifts = () => {
         );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default MyShifts
+export default MyShifts;

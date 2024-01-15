@@ -27,3 +27,22 @@
     border: 1px solid var(--color-whiteGreen);
     cursor: not-allowed;
 }
+
+.cancelBtn {
+    color: var(  --color-red);
+    background-color: transparent;
+    border: 1px solid var(--color-red);
+    padding: 8px 32px;
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+.cancelBtn:disabled {
+    color: var(  --color-whiteRed);
+    border: 1px solid var(--color-whiteRed);
+    cursor: not-allowed;
+}
+
+.area {
+    color: var(--color-dullWhiteBlue);
+}

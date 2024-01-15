@@ -27,7 +27,7 @@ const ShiftCard = ({
         <div className={styles.timing}>
           {formatTime(startTime)}-{formatTime(endTime)}
         </div>
-        {showForMyShifts ? <p>{area}</p> : ""}
+        {showForMyShifts ? <p className={styles.area}>{area}</p> : ""}
       </div>
 
       <div>
@@ -37,6 +37,7 @@ const ShiftCard = ({
               cancelShift(id);
               setIsUpdated(!isUpdated);
             }}
+            className={styles.cancelBtn}
             disabled={currentTime > startTime}
           >
             Cancel

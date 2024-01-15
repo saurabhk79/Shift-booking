@@ -1,5 +1,16 @@
 .header {
-    color: var(--color-indigo);
     background-color: var(  --color-bg);
     padding: 16px;
+
+    display: flex;
+    align-items: end;
+}
+
+.header > h3 {
+    color: var(--color-indigo);
+    margin-right: 24px;
+}
+
+.header > b {
+    color: var(--color-dullWhiteBlue);
 }
