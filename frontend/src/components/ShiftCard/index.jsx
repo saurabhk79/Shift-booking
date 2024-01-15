@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-// import React from "react";
+import { useState } from "react";
 import { useMyContext } from "../../context";
 import styles from "./shiftCard.module.css";
 
@@ -11,6 +11,7 @@ const ShiftCard = ({
   startTime,
   showForMyShifts = false,
 }) => {
+  const [isUpdated, setIsUpdated] = useState(false);
   const { bookShift, cancelShift } = useMyContext();
   const currentTime = new Date();
 
@@ -32,13 +33,25 @@ const ShiftCard = ({
       <div>
         {booked ? (
           <button
-            onClick={() => cancelShift(id)}
+            onClick={() => {
+              cancelShift(id);
+              setIsUpdated(!isUpdated);
+            }}
             disabled={currentTime > startTime}
           >
             Cancel
           </button>
         ) : (
-          <button onClick={() => bookShift(id)} className={styles.bookBtn} disabled={currentTime > startTime}>Book</button>
+          <button
+            onClick={() => {
+              bookShift(id);
+              setIsUpdated(!isUpdated);
+            }}
+            className={styles.bookBtn}
+            disabled={currentTime > startTime}
+          >
+            Book
+          </button>
         )}
       </div>
     </div>

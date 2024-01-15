@@ -11,7 +11,6 @@ export const MyProvider = ({ children }) => {
   const [cities, setCities] = useState([]);
 
   const [shiftTabs, setShiftTabs] = useState(false);
-  const [isUpdated, setIsUpdated] = useState(true);
 
   useEffect(() => {
     const fetchShifts = async () => {
@@ -42,6 +41,7 @@ export const MyProvider = ({ children }) => {
   }, [shifts]);
 
   useEffect(() => {
+    console.log("Shifts updated");
     const groupShifts = () => {
       const today = new Date().setHours(0, 0, 0, 0);
       const tomorrow = new Date(today);
@@ -77,17 +77,19 @@ export const MyProvider = ({ children }) => {
   }, [shifts]);
 
   useEffect(() => {
+    console.log("Grouped Shifts updated");
     const filterBookedShifts = (groupedShifts) => {
-      const bookedShifts = {};
+      const newBookedShifts = {};
       if (!groupedShifts) return;
 
       Object.keys(groupedShifts).forEach((groupName) => {
-        bookedShifts[groupName] = groupedShifts[groupName]
+        newBookedShifts[groupName] = groupedShifts[groupName]
           .filter((shift) => shift.booked)
           .sort((a, b) => a.startTime - b.startTime);
       });
 
-      setBookedShifts(bookedShifts);
+      console.log(newBookedShifts);
+      setBookedShifts(newBookedShifts);
     };
 
     filterBookedShifts(groupedShifts);
@@ -100,34 +102,30 @@ export const MyProvider = ({ children }) => {
   const bookShift = async (id) => {
     // const URL = `http://localhost:8080/shifts/${id}/book`;
 
-    console.log(id)
-    try {
-      // backend not accepting post request
-      // const res = await fetch(URL, {
-      //   method: "POST",
-      // });
-      // const data = await res.json();
-      // console.log(data);
+    // backend not accepting post request
+    // const res = await fetch(URL, {
+    //   method: "POST",
+    // });
+    // const data = await res.json();
+    // console.log(data);
 
-      const newShifts = [...shifts]
-      let shift = newShifts.filter((ele)=> ele.id === id)
-      shift[0].booked = true
+    const newShifts = [...shifts];
+    let shift = newShifts.filter((ele) => ele.id === id);
 
-      console.log(shift)
-      setShiftTabs([...newShifts, {...shift}])
-
-      setIsUpdated(!isUpdated)
-      return true
-    } catch (error) {
-      console.error("Error while booking the shift", error);
+    if (!shift.booked) {
+      shift[0].booked = true;
+      setShifts(newShifts);
     }
   };
 
   const cancelShift = async (id) => {
-    const URL = `http://localhost:8080/shifts/${id}/cancel`;
-    await fetch(URL);
+    const newShifts = [...shifts];
+    let shift = newShifts.filter((ele) => ele.id === id);
 
-    setIsUpdated(!isUpdated);
+    if (shift.booked){
+      shift[0].booked = false;
+      setShifts(newShifts);
+    }
   };
 
   const valueList = {

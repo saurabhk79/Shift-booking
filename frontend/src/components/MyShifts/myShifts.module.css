@@ -1,0 +1,5 @@
+.header {
+    color: var(--color-indigo);
+    background-color: var(  --color-bg);
+    padding: 16px;
+}
